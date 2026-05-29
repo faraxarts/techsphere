@@ -66,10 +66,10 @@ npm run dev
 Set these values in `.env`:
 
 ```env
-ADMIN_FIRSTNAME=Faramade
-ADMIN_SURNAME=Ayeni
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=change_this_password
+ADMIN_FIRSTNAME=YourFirstName
+ADMIN_SURNAME=YourSurname
+ADMIN_EMAIL=your_admin_email@example.com
+ADMIN_PASSWORD=your_secure_password
 ```
 
 Then run:
