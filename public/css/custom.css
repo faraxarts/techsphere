@@ -277,3 +277,21 @@ body { overflow-x: hidden; }
 @media (max-width: 768px) {
   .contact-row { flex-direction: column; }
 }
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+pre,
+code {
+  max-width: 100%;
+}
