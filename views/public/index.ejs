@@ -1,0 +1,367 @@
+<%- include('../partials/head', { title }) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<%
+  const currentProfile = typeof profile !== 'undefined' && profile ? profile : {};
+  const profileStats = currentProfile && currentProfile.stats ? currentProfile.stats : {};
+  const pageStats = typeof stats !== 'undefined' && stats ? stats : {};
+  const homepagePosts = typeof posts !== 'undefined' && Array.isArray(posts) ? posts : [];
+  const homepageProjects = typeof projects !== 'undefined' && Array.isArray(projects) ? projects : [];
+
+  const displayProjects = homepageProjects.slice(0, 3);
+  const displayPosts = homepagePosts.slice(0, 3);
+
+  const skills = Array.isArray(currentProfile.skills) && currentProfile.skills.length
+    ? currentProfile.skills
+    : ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'MongoDB', 'EJS', 'Tailwind CSS'];
+
+  function formatDate(dateValue) {
+    if (!dateValue) return 'Recent';
+    return new Date(dateValue).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
+
+  function shortText(value, limit = 120) {
+    const text = String(value || '');
+    return text.length > limit ? text.slice(0, limit) + '...' : text;
+  }
+%>
+
+<main>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden px-5 py-20 lg:px-8 lg:py-28">
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.18),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.18),transparent_35%)]"></div>
+
+    <div class="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
+      <div>
+        <p class="eyebrow">
+          <%= currentProfile.heroEyebrow || 'Portfolio & Tech Blog' %>
+        </p>
+
+        <h1 class="mt-5 max-w-4xl font-display text-4xl font-black leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
+          <span class="gradient-text">
+            <%= currentProfile.heroHeadline || 'Building web experiences through code, creativity, and continuous learning.' %>
+          </span>
+        </h1>
+
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+          <%= currentProfile.heroDescription || 'Welcome to TechSphere, my personal portfolio and blog where I showcase projects, share what I’m learning, and publish practical articles about web development and technology.' %>
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="/projects" class="btn-primary">View My Projects</a>
+          <a href="/blog" class="btn-secondary">Read My Blog</a>
+          <a href="/contact" class="btn-secondary">Contact Me</a>
+        </div>
+
+        <div class="mt-10 grid max-w-lg grid-cols-3 gap-4">
+          <div class="metric-card">
+            <strong><%= pageStats.totalProjects || 0 %>+</strong>
+            <span>Projects</span>
+          </div>
+
+          <div class="metric-card">
+            <strong><%= pageStats.totalPublishedPosts || 0 %>+</strong>
+            <span>Articles</span>
+          </div>
+
+          <div class="metric-card">
+            <strong><%= profileStats.yearsLearning || '3+' %></strong>
+            <span>Years Learning</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card relative p-6 md:p-8">
+        <div class="mb-5 flex items-center gap-2">
+          <span class="h-3 w-3 rounded-full bg-red-400"></span>
+          <span class="h-3 w-3 rounded-full bg-yellow-400"></span>
+          <span class="h-3 w-3 rounded-full bg-green-400"></span>
+        </div>
+
+        <pre class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/80 p-5 font-mono text-sm leading-7 text-slate-300"><code><span class="text-purple-300">const</span> developer = {
+  name: <span class="text-cyan-300">"<%= currentProfile.ownerName || 'Faramade Ayeni' %>"</span>,
+  title: <span class="text-cyan-300">"<%= currentProfile.professionalTitle || 'Web Developer' %>"</span>,
+  mission: <span class="text-cyan-300">"<%= currentProfile.mission || 'Build, learn, share' %>"</span>,
+  status: <span class="text-cyan-300">"<%= currentProfile.availabilityStatus || 'Open to opportunities' %>"</span>,
+  stack: [
+<% skills.slice(0, 5).forEach(skill => { %>    <span class="text-emerald-300">"<%= skill %>"</span>,
+<% }) %>  ]
+}</code></pre>
+
+        <div class="mt-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-5">
+          <p class="text-sm font-semibold text-cyan-300">Currently focused on</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">
+            <%= currentProfile.currentFocusTitle || 'Full-stack fundamentals and portfolio growth' %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="px-5 py-10 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="section-heading">
+        <p class="eyebrow">Technology Stack</p>
+        <h2>Skills TechSphere reflects</h2>
+        <p>
+          A quick view of the tools, technologies, and development areas connected to this portfolio.
+        </p>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <% skills.forEach(skill => { %>
+          <span class="tech-badge"><%= skill %></span>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <section class="px-5 py-16 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div class="section-heading mb-0">
+          <p class="eyebrow">Featured Work</p>
+          <h2>Projects built with purpose</h2>
+          <p>
+            Selected projects that show practical learning, problem-solving, and full-stack development growth.
+          </p>
+        </div>
+
+        <a href="/projects" class="btn-secondary w-fit">View All Projects</a>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <% if (displayProjects.length) { %>
+          <% displayProjects.forEach(project => { %>
+            <article class="project-card">
+              <img
+                src="<%= project.image || project.featuredImage || '/images/placeholders/project-1.svg' %>"
+                alt="<%= project.title || 'Project image' %>"
+                class="h-52 w-full rounded-2xl object-cover"
+                onerror="this.src='/images/placeholders/project-1.svg'"
+              >
+
+              <div class="mt-5 flex flex-wrap items-center gap-3">
+                <span class="category-pill"><%= project.status || 'Project' %></span>
+              </div>
+
+              <h3 class="mt-4 text-2xl font-bold text-white">
+                <%= project.title || 'Untitled Project' %>
+              </h3>
+
+              <p class="mt-3 text-sm leading-6 text-slate-400">
+                <%= shortText(project.description || project.summary || 'A portfolio project from TechSphere.', 140) %>
+              </p>
+
+              <div class="mt-5 flex flex-wrap gap-2">
+                <% const projectTech = project.techStack || project.technologies || []; %>
+                <% if (Array.isArray(projectTech)) { %>
+                  <% projectTech.slice(0, 4).forEach(tech => { %>
+                    <span class="mini-badge"><%= tech %></span>
+                  <% }) %>
+                <% } %>
+              </div>
+
+              <div class="mt-6 flex flex-wrap gap-3">
+                <a href="/projects/<%= project.slug %>" class="btn-secondary">View Details</a>
+
+                <% if (project.liveUrl || project.demoUrl) { %>
+                  <a href="<%= project.liveUrl || project.demoUrl %>" target="_blank" rel="noopener noreferrer" class="table-action">
+                    Live Demo
+                  </a>
+                <% } %>
+
+                <% if (project.githubUrl) { %>
+                  <a href="<%= project.githubUrl %>" target="_blank" rel="noopener noreferrer" class="table-action">
+                    GitHub
+                  </a>
+                <% } %>
+              </div>
+            </article>
+          <% }) %>
+        <% } else { %>
+          <div class="empty-state md:col-span-2 xl:col-span-3">
+            No projects have been added yet. Create your first project from the admin dashboard.
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Preview Section -->
+  <section class="px-5 py-16 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.8fr_1.2fr]">
+      <aside class="glass-card h-fit p-6 text-center">
+        <% if (currentProfile.profileImage) { %>
+  <img
+    src="<%= currentProfile.profileImage %>"
+    alt="<%= currentProfile.ownerName || 'Profile image' %>"
+    class="mx-auto h-32 w-32 rounded-full border border-blue-400/30 object-cover shadow-glow"
+  >
+<% } else { %>
+  <div class="mx-auto grid h-28 w-28 place-items-center rounded-full border border-blue-400/30 bg-blue-500/10 text-4xl font-bold text-white shadow-glow">
+    <%= currentProfile.initials || 'FA' %>
+  </div>
+<% } %>
+
+        <h2 class="mt-5 font-display text-2xl font-bold text-white">
+          <%= currentProfile.ownerName || 'Faramade Ayeni' %>
+        </h2>
+
+        <p class="mt-2 text-sm text-cyan-300">
+          <%= currentProfile.professionalTitle || 'Web Developer • Tech Writer' %>
+        </p>
+
+        <p class="mt-5 text-sm leading-7 text-slate-400">
+          <%= currentProfile.aboutIntro || 'A developer focused on building useful web applications and documenting the learning journey.' %>
+        </p>
+
+        <a href="/about" class="btn-primary mt-6 w-full justify-center">More About Me</a>
+      </aside>
+
+      <div class="glass-card p-6 md:p-8">
+        <p class="eyebrow">About TechSphere</p>
+
+        <h2 class="mt-3 max-w-3xl text-3xl font-bold text-white md:text-4xl">
+          A portfolio-blog built to show growth, skill, and practical thinking.
+        </h2>
+
+        <p class="mt-5 leading-8 text-slate-300">
+          <%= currentProfile.bio || 'TechSphere is designed as a personal portfolio and blog. It brings together projects, learning notes, technical articles, and development progress in one professional space.' %>
+        </p>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          <div class="value-card">
+            <h3>Build</h3>
+            <p>Turn ideas into working web applications.</p>
+          </div>
+
+          <div class="value-card">
+            <h3>Learn</h3>
+            <p>Improve through projects and real-world problems.</p>
+          </div>
+
+          <div class="value-card">
+            <h3>Share</h3>
+            <p>Document the journey through articles and case studies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Blog Posts Section -->
+  <section class="px-5 py-16 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div class="section-heading mb-0">
+          <p class="eyebrow">Latest Articles</p>
+          <h2>Thoughts, tutorials, and lessons</h2>
+          <p>
+            Blog posts about projects, development lessons, technical concepts, and the journey of growing in tech.
+          </p>
+        </div>
+
+        <a href="/blog" class="btn-secondary w-fit">View Blog</a>
+      </div>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <% if (displayPosts.length) { %>
+          <% displayPosts.forEach(post => { %>
+            <article class="blog-card">
+              <img
+                src="<%= post.image || post.featuredImage || '/images/placeholders/blog-1.svg' %>"
+                alt="<%= post.title || 'Blog post image' %>"
+                class="h-44 w-full rounded-2xl object-cover"
+                onerror="this.src='/images/placeholders/blog-1.svg'"
+              >
+
+              <div class="mt-5 flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                <span class="category-pill"><%= post.category || 'Article' %></span>
+                <span><%= formatDate(post.createdAt || post.publishedAt) %></span>
+                <% if (post.readingTime) { %>
+                  <span><%= post.readingTime %> min read</span>
+                <% } %>
+              </div>
+
+              <h3 class="mt-4 text-xl font-bold text-white">
+                <%= post.title || 'Untitled Post' %>
+              </h3>
+
+              <p class="mt-3 line-clamp-3 text-sm leading-6 text-slate-400">
+                <%= shortText(post.excerpt || 'Read this TechSphere article.', 130) %>
+              </p>
+
+              <a href="/blog/<%= post.slug %>" class="mt-6 inline-flex text-sm font-semibold text-cyan-300 hover:text-cyan-200">
+                Read More →
+              </a>
+            </article>
+          <% }) %>
+        <% } else { %>
+          <div class="empty-state md:col-span-2 xl:col-span-3">
+            No blog posts have been published yet. Create and publish your first post from the admin dashboard.
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech News Preview -->
+  <section class="px-5 py-16 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="glass-card grid gap-8 p-6 md:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <p class="eyebrow">Trending Updates</p>
+          <h2 class="mt-3 text-3xl font-bold text-white md:text-4xl">
+            Stay updated with curated technology news.
+          </h2>
+          <p class="mt-4 max-w-2xl leading-8 text-slate-300">
+            TechSphere also includes a separate news section for external technology headlines, while the blog remains focused on original posts and personal learning content.
+          </p>
+        </div>
+
+        <a href="/news" class="btn-primary w-fit">Explore Tech News</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="px-5 py-16 lg:px-8">
+    <div class="mx-auto max-w-5xl text-center">
+      <p class="eyebrow justify-center">Let’s Connect</p>
+
+      <h2 class="mt-4 font-display text-4xl font-black text-white md:text-5xl">
+        Interested in working together or following my journey?
+      </h2>
+
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-300">
+        Reach out for collaboration, opportunities, feedback, or conversations around web development and technology.
+      </p>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="/contact" class="btn-primary">Contact Me</a>
+
+        <% if (currentProfile.socialLinks && currentProfile.socialLinks.github && currentProfile.socialLinks.github !== '#') { %>
+          <a href="<%= currentProfile.socialLinks.github %>" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            GitHub
+          </a>
+        <% } %>
+
+        <% if (currentProfile.socialLinks && currentProfile.socialLinks.linkedin && currentProfile.socialLinks.linkedin !== '#') { %>
+          <a href="<%= currentProfile.socialLinks.linkedin %>" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            LinkedIn
+          </a>
+        <% } %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

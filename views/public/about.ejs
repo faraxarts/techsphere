@@ -1,0 +1,99 @@
+<%- include('../partials/head', { title }) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+<% const profileStats = profile && profile.stats ? profile.stats : {}; %>
+<main class="px-5 py-16 lg:px-8">
+  <section class="mx-auto max-w-7xl">
+  <p class="eyebrow">About Me</p>
+  <h1 class="mt-4 max-w-3xl font-display text-4xl font-black text-white md:text-6xl">
+    <%= profile.ownerName || 'Faramade Ayeni' %>
+  </h1>
+  <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+    <%= profile.bio || 'A developer, builder, and lifelong learner.' %>
+  </p>
+  </section>
+
+  <section class="mx-auto mt-12 grid max-w-7xl gap-8 lg:grid-cols-[.8fr_1.2fr]">
+    <aside class="glass-card h-fit p-6 text-center">
+      <% if (profile.profileImage) { %>
+  <img
+    src="<%= profile.profileImage %>"
+    alt="<%= profile.ownerName || 'Profile image' %>"
+    class="mx-auto h-32 w-32 rounded-full border border-blue-400/30 object-cover shadow-glow"
+  >
+<% } else { %>
+  <div class="mx-auto grid h-28 w-28 place-items-center rounded-full border border-blue-400/30 bg-blue-500/10 text-4xl font-bold text-white shadow-glow">
+    <%= profile.initials || 'FA' %>
+  </div>
+<% } %>
+
+<h2 class="mt-5 font-display text-2xl font-bold text-white"><%= profile.ownerName || 'Faramade Ayeni' %></h2>
+<p class="mt-2 text-sm text-cyan-300"><%= profile.professionalTitle || 'Web Developer • Tech Writer' %></p>
+<p class="mt-5 text-sm leading-7 text-slate-400"><%= profile.aboutIntro || '' %></p>
+
+<div class="mt-6 grid grid-cols-3 gap-3">
+  <div class="metric-card"><strong><%= stats.totalProjects || 0 %></strong><span>Projects</span></div>
+  <div class="metric-card"><strong><%= stats.totalPublishedPosts || 0 %></strong><span>Posts</span></div>
+  <div class="metric-card"><strong><%= profileStats.yearsLearning || '3+' %></strong><span>Years</span></div>
+</div>
+      <div class="mt-6 grid gap-3">
+  <a href="/contact" class="btn-primary w-full justify-center">Let’s Connect</a>
+
+  <% if (profile.socialLinks && profile.socialLinks.resume && profile.socialLinks.resume !== '#') { %>
+    <a
+      href="<%= profile.socialLinks.resume %>"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-secondary w-full justify-center"
+    >
+      View Resume
+    </a>
+  <% } %>
+</div>
+    </aside>
+
+    <div class="space-y-6">
+      <article class="glass-card p-6 md:p-8">
+        <p class="eyebrow">Who I Am</p>
+        <h2 class="mt-3 text-2xl font-bold text-white">Building practical digital experiences</h2>
+        <p class="mt-4 leading-8 text-slate-300">
+  <%= profile.aboutIntro || 'I am a developer focused on turning ideas into useful web applications.' %>
+</p>
+      </article>
+
+      <article class="glass-card p-6 md:p-8">
+        <p class="eyebrow">Current Focus</p>
+        <h2 class="mt-3 text-2xl font-bold text-white">
+  <%= profile.currentFocusTitle || 'Full-stack fundamentals and portfolio growth' %>
+</h2>
+<p class="mt-4 leading-8 text-slate-300">
+  <%= profile.currentFocus || '' %>
+</p>
+      </article>
+
+      <article class="glass-card p-6 md:p-8">
+        <p class="eyebrow">What Drives Me</p>
+        <div class="mt-6 grid gap-4 md:grid-cols-3">
+          <div class="value-card"><h3>Build</h3><p>Turn ideas into working applications.</p></div>
+          <div class="value-card"><h3>Learn</h3><p>Improve through projects and real problems.</p></div>
+          <div class="value-card"><h3>Share</h3><p>Document the journey to help others.</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="mx-auto mt-16 max-w-7xl">
+    <div class="section-heading">
+      <p class="eyebrow">Technology Stack</p>
+      <h2>Skills I want TechSphere to reflect</h2>
+      <p>These badges can later be replaced with a more accurate skill set as the portfolio matures.</p>
+    </div>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <% ['HTML', 'CSS', 'JavaScript', 'Node.js', 'Express.js', 'MongoDB', 'EJS', 'Tailwind CSS', 'Git', 'REST APIs', 'Authentication', 'Responsive Design'].forEach(skill => { %>
+        <span class="tech-badge"><%= skill %></span>
+      <% }) %>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

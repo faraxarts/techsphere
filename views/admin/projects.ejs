@@ -1,0 +1,49 @@
+<%- include('../partials/admin-head', { title }) %>
+<%- include('../partials/admin-sidebar') %>
+
+<main class="lg:pl-72">
+  <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+    <%- include('../partials/admin-flash') %>
+    <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p class="eyebrow">Portfolio Management</p>
+        <h1 class="mt-3 font-display text-4xl font-bold text-white">Projects</h1>
+        <p class="mt-2 text-slate-400">Add, edit, and publish portfolio case studies.</p>
+      </div>
+      <a href="/admin/projects/new" class="btn-primary">Add New Project</a>
+    </div>
+
+    <section class="admin-panel mt-8 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Title</th><th>Category</th><th>Status</th><th>Featured</th><th>Date</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <% projects.forEach(project => { %>
+              <tr>
+                <td class="min-w-64"><%= project.title %></td>
+                <td><%= project.category %></td>
+                <td><span class="status-pill"><%= project.status %></span></td>
+                <td><%= project.featured ? 'Yes' : 'No' %></td>
+                <td><%= new Date(project.createdAt).toLocaleDateString() %></td>
+                <td>
+                  <div class="flex gap-2">
+                    <a href="/projects/<%= project.slug || project._id %>" target="_blank" class="table-action">View</a>
+                    <a href="/admin/projects/<%= project._id %>/edit" class="table-action">Edit</a>
+                    <form action="/admin/projects/<%= project._id %>/delete" method="POST" onsubmit="return confirm('Delete this project?')">
+                      <button class="table-action-danger" type="submit">Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+            <% if (!projects.length) { %><tr><td colspan="6">No projects created yet.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<%- include('../partials/admin-footer') %>

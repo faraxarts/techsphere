@@ -1,0 +1,77 @@
+<%- include('../partials/head', { title }) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<main class="px-5 py-16 lg:px-8">
+  <section class="mx-auto max-w-7xl text-center">
+    <p class="eyebrow justify-center">Trending Updates</p>
+    <h1 class="mt-4 font-display text-4xl font-black text-white md:text-6xl">Tech News</h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+      Fresh technology headlines from trusted external sources, cached for faster reading on TechSphere.
+    </p>
+
+    <% if (newsMeta && newsMeta.error) { %>
+      <div class="mx-auto mt-6 max-w-2xl rounded-2xl border border-yellow-400/20 bg-yellow-400/10 p-4 text-sm text-yellow-100">
+        Could not fetch fresh news right now. Showing cached news instead.
+      </div>
+    <% } %>
+  </section>
+
+  <section class="mx-auto mt-10 max-w-4xl">
+    <form action="/news" method="GET" class="glass-card flex flex-col gap-4 p-4 md:flex-row">
+      <input
+        type="search"
+        name="search"
+        value="<%= search || '' %>"
+        placeholder="Search tech headlines, sources, or topics..."
+        class="form-input"
+      >
+      <button class="btn-primary md:w-40" type="submit">Search</button>
+    </form>
+  </section>
+
+  <section class="mx-auto mt-12 max-w-7xl">
+    <% if (newsItems.length) { %>
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <% newsItems.forEach(item => { %>
+          <article class="blog-card">
+            <img
+              src="<%= item.imageUrl || '/images/placeholders/blog-1.svg' %>"
+              alt="<%= item.title %>"
+              class="h-44 w-full rounded-2xl object-cover"
+              onerror="this.src='/images/placeholders/blog-1.svg'"
+            >
+
+            <div class="mt-5 flex flex-wrap items-center gap-3 text-xs text-slate-500">
+              <span class="category-pill"><%= item.sourceName || 'Tech News' %></span>
+              <span>
+                <%= item.publishedAt ? new Date(item.publishedAt).toLocaleDateString() : 'Recent' %>
+              </span>
+            </div>
+
+            <h2 class="mt-4 text-xl font-bold text-white"><%= item.title %></h2>
+
+            <p class="mt-3 line-clamp-3 text-sm leading-6 text-slate-400">
+              <%= item.description || 'Read the full story from the original source.' %>
+            </p>
+
+            <a
+              href="<%= item.originalUrl %>"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 inline-flex text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+            >
+              Read from Source →
+            </a>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        No tech news found yet. Check your NEWS_API_KEY or try refreshing later.
+      </div>
+    <% } %>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

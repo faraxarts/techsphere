@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500;
+  }
+}
+.contact-info-card {
+  @apply rounded-2xl border border-white/10 bg-white/[0.03] p-4;
+}
+
+.contact-info-card span {
+  @apply block text-xs font-semibold uppercase tracking-[0.2em] text-slate-500;
+}
+
+.contact-info-card strong,
+.contact-info-card a {
+  @apply mt-2 block text-sm font-semibold text-white hover:text-cyan-300;
+}
+
+.quick-action-card {
+  @apply rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-cyan-400/30 hover:bg-cyan-400/10;
+}
+
+.quick-action-card strong {
+  @apply block text-sm font-bold text-white;
+}
+
+.quick-action-card span {
+  @apply mt-2 block text-xs leading-5 text-slate-500;
+}

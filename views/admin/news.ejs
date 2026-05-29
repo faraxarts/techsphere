@@ -1,0 +1,109 @@
+<%- include('../partials/admin-head', { title }) %>
+<%- include('../partials/admin-sidebar') %>
+
+<main class="lg:pl-72">
+  <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+    <%- include('../partials/admin-flash') %>
+
+    <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p class="eyebrow">External Tech Updates</p>
+        <h1 class="mt-3 font-display text-4xl font-bold text-white">Tech News</h1>
+        <p class="mt-2 text-slate-400">
+          Fetch trending technology news, cache it, and import selected items as draft blog posts.
+        </p>
+      </div>
+
+      <form action="/admin/news/refresh" method="POST">
+        <button class="btn-primary" type="submit">Refresh News</button>
+      </form>
+    </div>
+
+    <% if (newsMeta && newsMeta.error) { %>
+      <div class="mt-6 rounded-2xl border border-yellow-400/20 bg-yellow-400/10 p-4 text-sm text-yellow-100">
+        Could not fetch fresh news: <%= newsMeta.error %>
+      </div>
+    <% } %>
+
+    <section class="admin-panel mt-8 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>News</th>
+              <th>Source</th>
+              <th>Date</th>
+              <th>Imported</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% newsItems.forEach(item => { %>
+              <tr>
+                <td class="min-w-96">
+                  <div class="flex items-start gap-4">
+                    <img
+                      src="<%= item.imageUrl || '/images/placeholders/blog-1.svg' %>"
+                      alt="<%= item.title %>"
+                      class="h-16 w-20 rounded-xl object-cover"
+                      onerror="this.src='/images/placeholders/blog-1.svg'"
+                    >
+                    <div>
+                      <p class="font-semibold text-white"><%= item.title %></p>
+                      <p class="mt-1 line-clamp-2 text-xs leading-5 text-slate-500">
+                        <%= item.description || 'No description available.' %>
+                      </p>
+                    </div>
+                  </div>
+                </td>
+
+                <td><%= item.sourceName || 'Unknown' %></td>
+
+                <td>
+                  <%= item.publishedAt ? new Date(item.publishedAt).toLocaleDateString() : 'Recent' %>
+                </td>
+
+                <td>
+                  <span class="status-pill"><%= item.isImported ? 'Yes' : 'No' %></span>
+                </td>
+
+                <td>
+                  <div class="flex flex-wrap gap-2">
+                    <a href="<%= item.originalUrl %>" target="_blank" rel="noopener noreferrer" class="table-action">
+                      Source
+                    </a>
+
+                    <% if (!item.isImported) { %>
+                      <form action="/admin/news/<%= item._id %>/import" method="POST">
+                        <button class="table-action" type="submit">Import Draft</button>
+                      </form>
+                    <% } else if (item.importedPost) { %>
+                      <a href="/admin/posts/<%= item.importedPost %>/edit" class="table-action">
+                        Edit Draft
+                      </a>
+                    <% } %>
+
+                    <form action="/admin/news/<%= item._id %>/delete" method="POST" onsubmit="return confirm('Delete this cached news item?')">
+                      <button class="table-action-danger" type="submit">Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+
+            <% if (!newsItems.length) { %>
+              <tr>
+                <td colspan="5">
+                  No tech news cached yet. Click “Refresh News” to fetch headlines.
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<%- include('../partials/admin-footer') %>

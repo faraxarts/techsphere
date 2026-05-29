@@ -1,0 +1,61 @@
+<%- include('../partials/head', { title }) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<main class="px-5 py-16 lg:px-8">
+  <article class="mx-auto max-w-7xl">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div>
+        <p class="eyebrow"><%= post.category || 'Learning Journey' %></p>
+        <h1 class="mt-4 max-w-4xl font-display text-4xl font-black text-white md:text-6xl"><%= post.title %></h1>
+        <div class="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-400">
+          <span>By <%= post.author ? (post.author.firstname + ' ' + post.author.surname) : site.owner %></span>
+          <span>•</span>
+          <span><%= post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Draft' %></span>
+          <span>•</span>
+          <span><%= post.readingTime || 3 %> min read</span>
+        </div>
+      </div>
+      <aside class="hidden lg:block">
+        <div class="glass-card p-5">
+          <p class="text-sm font-semibold text-white">Article Tools</p>
+          <div class="mt-4 grid gap-3 text-sm text-slate-400">
+            <a class="footer-link" href="/blog">← Back to Blog</a>
+            <a class="footer-link" href="/contact">Send Feedback</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <img src="<%= post.featuredImage || post.image || '/images/placeholders/blog-1.svg' %>" alt="<%= post.title %>" class="mt-10 h-[260px] w-full rounded-[2rem] border border-white/10 object-cover shadow-soft md:h-[460px]">
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div class="article-content">
+        <%- post.content %>
+      </div>
+      <aside class="space-y-6">
+        <div class="glass-card p-5">
+          <p class="text-sm font-semibold text-white">Tags</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <% (post.tags || []).forEach(tag => { %>
+              <span class="mini-badge"><%= tag %></span>
+            <% }) %>
+          </div>
+        </div>
+        <div class="glass-card p-5">
+          <p class="text-sm font-semibold text-white">Related Posts</p>
+          <div class="mt-4 grid gap-3">
+            <% relatedPosts.forEach(item => { %>
+              <a href="/blog/<%= item.slug %>" class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-cyan-300/40">
+                <span class="block text-sm font-semibold text-white"><%= item.title %></span>
+                <span class="mt-1 block text-xs text-slate-500"><%= item.category %></span>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </article>
+</main>
+
+<%- include('../partials/footer') %>

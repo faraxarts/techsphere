@@ -1,0 +1,16 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#07111f"/>
+  <g opacity="0.35">
+    <path d="M0 120H1200M0 240H1200M0 360H1200M0 480H1200M0 600H1200M0 720H1200" stroke="white" stroke-opacity="0.08"/>
+    <path d="M120 0V800M240 0V800M360 0V800M480 0V800M600 0V800M720 0V800M840 0V800M960 0V800M1080 0V800" stroke="white" stroke-opacity="0.08"/>
+  </g>
+  <circle cx="910" cy="210" r="220" fill="#22d3ee" opacity="0.16"/>
+  <circle cx="280" cy="610" r="180" fill="#22D3EE" opacity="0.10"/>
+  <rect x="210" y="190" width="780" height="420" rx="32" fill="white" fill-opacity="0.04" stroke="white" stroke-opacity="0.12"/>
+  <rect x="260" y="250" width="320" height="24" rx="12" fill="#22d3ee" opacity="0.8"/>
+  <rect x="260" y="310" width="520" height="18" rx="9" fill="white" opacity="0.28"/>
+  <rect x="260" y="350" width="440" height="18" rx="9" fill="white" opacity="0.18"/>
+  <rect x="260" y="420" width="170" height="54" rx="27" fill="#22d3ee"/>
+  <rect x="470" y="420" width="160" height="54" rx="27" fill="white" fill-opacity="0.08" stroke="white" stroke-opacity="0.15"/>
+  <text x="260" y="560" fill="white" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="800">Portfolio Blog</text>
+</svg>

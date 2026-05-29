@@ -1,0 +1,109 @@
+<%
+  const currentProfile = typeof profile !== 'undefined' && profile ? profile : {};
+  const social = currentProfile.socialLinks || {};
+  const currentYear = new Date().getFullYear();
+%>
+
+<footer class="border-t border-white/10 px-5 py-12 lg:px-8">
+  <div class="mx-auto grid max-w-7xl gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_.8fr_.8fr]">
+    <div>
+      <a href="/" class="flex items-center gap-3">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-2 shadow-glow">
+          <img
+            src="/images/logo/techsphere-symbol-navbar.png"
+            alt="TechSphere Logo"
+            class="h-full w-full object-contain"
+          >
+        </span>
+
+        <div>
+          <strong class="block font-display text-xl text-white">
+            <%= currentProfile.siteName || 'TechSphere' %>
+          </strong>
+
+          <span class="text-xs text-slate-500">
+            <%= currentProfile.professionalTitle || 'Portfolio & Tech Blog' %>
+          </span>
+        </div>
+      </a>
+
+      <p class="mt-5 max-w-md text-sm leading-7 text-slate-400">
+        <%= currentProfile.heroDescription || 'A personal portfolio and technology blog built to showcase projects, document growth, and share practical web development knowledge.' %>
+      </p>
+
+      <p class="mt-5 text-sm text-slate-500">
+        <%= currentProfile.availabilityStatus || 'Open to opportunities' %>
+      </p>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-[0.25em] text-white">
+        Explore
+      </h3>
+
+      <nav class="mt-5 flex flex-col gap-3 text-sm text-slate-400">
+        <a class="hover:text-cyan-300" href="/">Home</a>
+        <a class="hover:text-cyan-300" href="/about">About</a>
+        <a class="hover:text-cyan-300" href="/projects">Projects</a>
+        <a class="hover:text-cyan-300" href="/blog">Blog</a>
+        <a class="hover:text-cyan-300" href="/news">News</a>
+        <a class="hover:text-cyan-300" href="/contact">Contact</a>
+      </nav>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-bold uppercase tracking-[0.25em] text-white">
+        Connect
+      </h3>
+
+      <div class="mt-5 flex flex-col gap-3 text-sm text-slate-400">
+        <a class="hover:text-cyan-300" href="mailto:<%= currentProfile.email || 'hello@techsphere.dev' %>">
+          <%= currentProfile.email || 'hello@techsphere.dev' %>
+        </a>
+
+        <% if (currentProfile.location) { %>
+          <span><%= currentProfile.location %></span>
+        <% } %>
+
+        <% if (social.github && social.github !== '#') { %>
+          <a class="hover:text-cyan-300" href="<%= social.github %>" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <% } %>
+
+        <% if (social.linkedin && social.linkedin !== '#') { %>
+          <a class="hover:text-cyan-300" href="<%= social.linkedin %>" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <% } %>
+
+        <% if (social.twitter && social.twitter !== '#') { %>
+          <a class="hover:text-cyan-300" href="<%= social.twitter %>" target="_blank" rel="noopener noreferrer">Twitter/X</a>
+        <% } %>
+
+        <% if (social.resume && social.resume !== '#') { %>
+          <a class="hover:text-cyan-300" href="<%= social.resume %>" target="_blank" rel="noopener noreferrer">Resume</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-4 border-t border-white/10 pt-6 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
+    <p>
+      © <%= currentYear %> <%= currentProfile.siteName || 'TechSphere' %> by <%= currentProfile.ownerName || 'Faramade Ayeni' %>.
+    </p>
+
+    <div class="flex items-center gap-5">
+      <a class="hover:text-cyan-300" href="/terms">Terms</a>
+      <a class="hover:text-cyan-300" href="/contact">Contact</a>
+
+      <a
+        class="text-slate-700 hover:text-cyan-300"
+        href="<%= typeof admin !== 'undefined' && admin ? '/admin/dashboard' : '/admin/login' %>"
+        title="Studio"
+      >
+        .
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

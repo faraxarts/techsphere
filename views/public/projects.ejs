@@ -1,0 +1,56 @@
+<%- include('../partials/head', { title }) %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/flash') %>
+
+<main class="px-5 py-16 lg:px-8">
+  <section class="mx-auto max-w-7xl">
+    <p class="eyebrow">Portfolio Work</p>
+    <h1 class="mt-4 max-w-3xl font-display text-4xl font-black text-white md:text-6xl">My Projects</h1>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+      A growing collection of applications, experiments, and case studies that show what I’m building and learning.
+    </p>
+  </section>
+
+  <section class="mx-auto mt-10 max-w-7xl">
+    <form action="/projects" method="GET" class="glass-card flex flex-col gap-4 p-4 md:flex-row md:items-center md:justify-between">
+      <input type="search" name="search" value="<%= search || '' %>" placeholder="Search projects, stack, or ideas..." class="form-input md:max-w-md">
+      <div class="flex flex-wrap gap-2">
+        <% categories.forEach(category => { %>
+          <button name="category" value="<%= category %>" class="filter-chip <%= selectedCategory === category ? 'active' : '' %>"><%= category %></button>
+        <% }) %>
+      </div>
+    </form>
+  </section>
+
+  <section class="mx-auto mt-10 max-w-7xl">
+    <% if (projects.length) { %>
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <% projects.forEach(project => { %>
+          <article class="project-card">
+            <img src="<%= project.image || '/images/placeholders/project-1.svg' %>" alt="<%= project.title %>" class="h-52 w-full rounded-2xl object-cover">
+            <div class="mt-5 flex items-center justify-between gap-3">
+              <span class="status-pill"><%= project.status || 'In Progress' %></span>
+              <span class="text-xs text-slate-500"><%= project.category || 'Full-Stack' %></span>
+            </div>
+            <h2 class="mt-4 text-2xl font-bold text-white"><%= project.title %></h2>
+            <p class="mt-3 line-clamp-3 text-sm leading-6 text-slate-400"><%= project.summary %></p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <% (project.techStack || []).slice(0, 4).forEach(tech => { %>
+                <span class="mini-badge"><%= tech %></span>
+              <% }) %>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="/projects/<%= project.slug || project._id %>" class="btn-primary-sm">Case Study</a>
+              <a href="<%= project.githubUrl || '#' %>" class="btn-secondary-sm">GitHub</a>
+              <a href="<%= project.liveUrl || '#' %>" class="btn-secondary-sm">Live</a>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="empty-state">No projects matched your search yet.</div>
+    <% } %>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,70 @@
+<aside class="fixed inset-y-0 left-0 z-40 hidden w-72 border-r border-white/10 bg-slate-950/90 p-5 backdrop-blur-xl lg:block">
+  <a href="/admin/dashboard" class="flex items-center gap-3">
+    <span class="grid h-12 w-12 place-items-center rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-2 shadow-glow">
+      <img
+        src="/images/logo/techsphere-symbol-navbar.png"
+        alt="TechSphere Logo"
+        class="h-full w-full object-contain"
+      >
+    </span>
+
+    <span>
+      <span class="block font-display text-lg font-bold text-white">
+        <%= site && site.name ? site.name : 'TechSphere' %>
+      </span>
+      <span class="block text-xs text-slate-500">Studio Workspace</span>
+    </span>
+  </a>
+
+  <nav class="mt-10 grid gap-2 text-sm">
+    <a class="admin-nav-link <%= currentPath === '/admin/dashboard' ? 'active' : '' %>" href="/admin/dashboard">Dashboard</a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/settings') ? 'active' : '' %>" href="/admin/settings">Site Settings</a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/posts') ? 'active' : '' %>" href="/admin/posts">Blog Posts</a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/projects') ? 'active' : '' %>" href="/admin/projects">Projects</a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/news') ? 'active' : '' %>" href="/admin/news">Tech News</a>
+    <a class="admin-nav-link <%= currentPath.startsWith('/admin/messages') ? 'active' : '' %>" href="/admin/messages">Messages</a>
+    <a class="admin-nav-link" href="/" target="_blank">View Site</a>
+  </nav>
+
+  <div class="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+    <p class="text-xs text-slate-500">Signed in as</p>
+    <p class="mt-1 truncate text-sm font-semibold text-white">
+      <%= admin ? admin.firstname + ' ' + admin.surname : 'Studio User' %>
+    </p>
+    <a href="/admin/logout" class="mt-4 inline-flex text-sm font-semibold text-cyan-300 hover:text-cyan-200">
+      Logout →
+    </a>
+  </div>
+</aside>
+
+<header class="sticky top-0 z-30 border-b border-white/10 bg-slate-950/90 px-5 py-4 backdrop-blur-xl lg:hidden">
+  <div class="flex items-center justify-between">
+    <a href="/admin/dashboard" class="flex items-center gap-3">
+      <span class="grid h-10 w-10 place-items-center rounded-xl border border-cyan-400/30 bg-cyan-400/10 p-2 shadow-glow">
+        <img
+          src="/images/logo/techsphere-symbol-navbar.png"
+          alt="TechSphere Logo"
+          class="h-full w-full object-contain"
+        >
+      </span>
+
+      <span class="font-display text-lg font-bold text-white">
+        Studio
+      </span>
+    </a>
+
+    <a href="/admin/logout" class="rounded-full border border-white/10 px-3 py-1.5 text-xs text-slate-300">
+      Logout
+    </a>
+  </div>
+
+  <div class="mt-4 flex gap-2 overflow-x-auto pb-1 text-xs">
+    <a class="admin-mobile-link" href="/admin/dashboard">Dashboard</a>
+    <a class="admin-mobile-link" href="/admin/settings">Settings</a>
+    <a class="admin-mobile-link" href="/admin/posts">Posts</a>
+    <a class="admin-mobile-link" href="/admin/projects">Projects</a>
+    <a class="admin-mobile-link" href="/admin/news">News</a>
+    <a class="admin-mobile-link" href="/admin/messages">Messages</a>
+    <a class="admin-mobile-link" href="/">Site</a>
+  </div>
+</header>

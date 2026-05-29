@@ -1,0 +1,89 @@
+<%- include('../partials/admin-head', { title }) %>
+<%- include('../partials/admin-sidebar') %>
+
+<main class="lg:pl-72">
+  <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+    <%- include('../partials/admin-flash') %>
+    <div class="mb-8">
+      <p class="eyebrow">Edit Article</p>
+      <h1 class="mt-3 font-display text-4xl font-bold text-white">Edit Post</h1>
+    </div>
+
+    <form action="/admin/posts/<%= post._id %>" method="POST" enctype="multipart/form-data" class="grid gap-6 xl:grid-cols-[1fr_360px]">
+      <section class="admin-panel space-y-5">
+        <div>
+          <label class="form-label">Title</label>
+          <input class="form-input" type="text" name="title" required value="<%= post.title %>">
+        </div>
+        <div>
+          <label class="form-label">Excerpt</label>
+          <textarea class="form-input min-h-24" name="excerpt"><%= post.excerpt || '' %></textarea>
+        </div>
+        <div>
+          <label class="form-label">Content</label>
+          <div id="editor-container" class="admin-editor"></div>
+          <input type="hidden" id="content" name="content" required>
+        </div>
+      </section>
+
+      <aside class="space-y-6">
+        <div class="admin-panel space-y-5">
+          <div>
+            <label class="form-label">Slug</label>
+            <input class="form-input" type="text" name="slug" value="<%= post.slug || '' %>">
+          </div>
+          <div>
+            <label class="form-label">Category</label>
+            <input class="form-input" type="text" name="category" value="<%= post.category || 'Learning Journey' %>">
+          </div>
+          <div>
+            <label class="form-label">Tags</label>
+            <input class="form-input" type="text" name="tags" value="<%= (post.tags || []).join(', ') %>">
+          </div>
+          <div>
+  <label class="form-label">Image URL</label>
+  <input
+    class="form-input"
+    type="text"
+    name="image"
+    value="<%= post && post.image ? post.image : '' %>"
+    placeholder="https://example.com/image.jpg or leave empty"
+  >
+  <p class="mt-2 text-xs text-slate-500">
+    Paste an online image URL, or upload an image below.
+  </p>
+</div>
+
+<div>
+  <label class="form-label">Upload Image</label>
+  <input
+    class="form-input"
+    type="file"
+    name="imageFile"
+    accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+  >
+  <p class="mt-2 text-xs text-slate-500">
+    Accepted formats: JPG, PNG, WEBP, GIF. Maximum size: 5MB.
+  </p>
+</div>
+          <div>
+            <label class="form-label">Status</label>
+            <select class="form-input" name="status">
+              <option value="published" <%= post.status === 'published' ? 'selected' : '' %>>Published</option>
+              <option value="draft" <%= post.status === 'draft' ? 'selected' : '' %>>Draft</option>
+            </select>
+          </div>
+          <label class="flex items-center gap-3 text-sm text-slate-300">
+            <input type="checkbox" name="featured" <%= post.featured ? 'checked' : '' %> class="h-4 w-4 rounded border-white/20 bg-slate-900">
+            Featured post
+          </label>
+          <button class="btn-primary w-full justify-center" type="submit">Save Changes</button>
+          <a href="/admin/posts" class="btn-secondary w-full justify-center">Cancel</a>
+        </div>
+      </aside>
+    </form>
+  </div>
+</main>
+
+<script>window.initialEditorContent = <%- JSON.stringify(post.content || '') %>;</script>
+<%- include('../partials/admin-footer') %>

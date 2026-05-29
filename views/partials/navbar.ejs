@@ -1,0 +1,49 @@
+<header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 px-5 py-4 backdrop-blur-xl lg:px-8">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between">
+    <a href="/" class="flex items-center gap-3">
+      <span class="grid h-12 w-12 place-items-center rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-2 shadow-glow">
+        <img
+          src="/images/logo/techsphere-symbol-navbar.png"
+          alt="TechSphere Logo"
+          class="h-full w-full object-contain"
+        >
+      </span>
+
+      <div>
+        <strong class="block font-display text-xl text-white">
+          <%= site && site.name ? site.name : 'TechSphere' %>
+        </strong>
+        <span class="text-xs text-slate-500">Portfolio & Tech Blog</span>
+      </div>
+    </a>
+
+    <div class="hidden items-center gap-8 md:flex">
+      <a class="nav-link <%= currentPath === '/' ? 'active' : '' %>" href="/">Home</a>
+      <a class="nav-link <%= currentPath.startsWith('/about') ? 'active' : '' %>" href="/about">About</a>
+      <a class="nav-link <%= currentPath.startsWith('/projects') ? 'active' : '' %>" href="/projects">Projects</a>
+      <a class="nav-link <%= currentPath.startsWith('/blog') ? 'active' : '' %>" href="/blog">Blog</a>
+      <a class="nav-link <%= currentPath.startsWith('/news') ? 'active' : '' %>" href="/news">News</a>
+      <a class="nav-link <%= currentPath.startsWith('/contact') ? 'active' : '' %>" href="/contact">Contact</a>
+    </div>
+
+    <button
+      id="mobile-menu-button"
+      class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-white md:hidden"
+      type="button"
+      aria-label="Open menu"
+    >
+      ☰
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="mx-auto mt-4 hidden max-w-7xl rounded-2xl border border-white/10 bg-slate-900/95 p-4 md:hidden">
+    <div class="flex flex-col gap-3">
+      <a class="mobile-nav-link" href="/">Home</a>
+      <a class="mobile-nav-link" href="/about">About</a>
+      <a class="mobile-nav-link" href="/projects">Projects</a>
+      <a class="mobile-nav-link" href="/blog">Blog</a>
+      <a class="mobile-nav-link" href="/news">News</a>
+      <a class="mobile-nav-link" href="/contact">Contact</a>
+    </div>
+  </div>
+</header>
